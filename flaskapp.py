@@ -28,16 +28,44 @@ def hello(name):
 #  YOUR ROUTES GO BELOW THIS LINE
 #  Each exercise asks you to add a new @app.route here
 # ============================================================
-# ---- Exercise 1: add this to flaskapp.py ----
-
+# ---- Exercise 1: Add this to flaskapp.py ----
 @app.route('/analyze/<word>')
 def analyze(word):
-    # YOUR CODE HERE
-    # Count the characters in `word` and return as a string
-    # Example: /analyze/Drake  →  should display: 5
-    pass
+    # Count the characters in `word`
+    character_count = len(word)
+    
+    # Return the character count as a string
+    print ("This is how long your word is!")
+    return str(character_count)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
+# ---- Exercise 2: update your analyze route ----
+@app.route('/analyze/<word>')
+def analyze(word):
+    # Step 1: Character count
+    num_chars = len(word)
+
+    # Step 2: Count vowels (a, e, i, o, u) — case insensitive
+    num_vowels = 0
+    for char in word.lower():
+        if char in 'aeiou':
+            num_vowels += 1
+
+    # Step 3: Reverse the word
+    reversed_word = word[::-1]
+
+    # Render the template with all the necessary variables
+    return render_template('analyze.html',
+                           word=word,
+                           num_chars=num_chars,
+                           num_vowels=num_vowels,
+                           reversed_word=reversed_word)
+
+if __name__ == '__main__':
+    app.run(debug=True)
 
 
 # ============================================================
